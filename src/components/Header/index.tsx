@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import { SignInButton } from '../SignInButton'
 import styles from './styles.module.scss'
 
