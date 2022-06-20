@@ -1,17 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/jsx-no-comment-textnodes */
-import { GetStaticProps } from 'next'
-import Head from 'next/head'
-import { SubscribeButton } from '../components/SubscribeButton'
-import { stripe } from '../services/stripe'
+import { GetStaticProps } from "next";
+import Head from "next/head";
+import { SubscribeButton } from "../components/SubscribeButton";
+import { stripe } from "../services/stripe";
 
-import styles from '../styles/home.module.scss'
+import styles from "../styles/home.module.scss";
 
 interface HomeProps {
   product: {
     priceId: string;
     amount: number;
-  }
+  };
 }
 
 export default function Home({ product }: HomeProps) {
@@ -23,9 +23,12 @@ export default function Home({ product }: HomeProps) {
       <main className={styles.contentContainer}>
         <section className={styles.hero}>
           <span>✌ Hey, welcome</span>
-          <h1>News about the <span>React</span></h1>
+          <h1>
+            News about the <span>React</span>
+          </h1>
           <p>
-            Get access to all the publications<br />
+            Get access to all the publications
+            <br />
             <span>for {product.amount} month</span>
           </p>
           <SubscribeButton priceId={product.priceId} />
@@ -33,24 +36,24 @@ export default function Home({ product }: HomeProps) {
         <img src="/images/avatar.svg" alt="Girl Coding" />
       </main>
     </>
-  )
+  );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const price = await stripe.prices.retrieve('price_1JXzPQF02rntUOsvtdCv63s5')
+  const price = await stripe.prices.retrieve("price_1JsGMnF02rntUOsv7u91b2KZ");
 
   const product = {
     priceId: price.id,
-    amount: new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
+    amount: new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
     }).format(price.unit_amount / 100),
-  }
+  };
 
   return {
     props: {
-      product
+      product,
     },
-    revalidate: 60 * 60 * 24 // 24 horas
-  }
-}
+    revalidate: 60 * 60 * 24, // 24 horas
+  };
+};
